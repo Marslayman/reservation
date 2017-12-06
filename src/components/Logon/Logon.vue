@@ -9,7 +9,7 @@
       </div>
       <div class="input-info">
       <group title="登 录 信 息">
-      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入用户名">
+      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入你的注册手机号">
         <i slot="label" class="iconfont icon-lianxirenwode"></i>
       </x-input>
       <x-input title="密码" v-model="password" type="password" required placeholder="请输入密码">
@@ -55,13 +55,13 @@ export default {
   methods: {
     subinfo () {
       var _this = this
-      var unreg = /[\u4e00-\u9fa5_a-zA-Z0-9_]{4,6}/ // 正则表达式对用户名做规则匹配
+      var unreg = /^1[3|4|5|7|8][0-9]{9}$/ // 正则表达式对用户名做规则匹配
       var pwdreg = /^[a-zA-Z0-9]{6,8}$/ // 正则表达式对密码做规则匹配
       if (this.username === '' || this.password === '') {
         return
       }
       if (!this.username.match(unreg) || !this.password.match(pwdreg)) {
-        this.error = '用户名或密码有误，请重新输入'
+        this.error = '手机号或密码格式有误，请重新输入'
         return
       }
       this.$store.dispatch('getLogin', {'username': _this.username, 'password': _this.password}).then(res => {

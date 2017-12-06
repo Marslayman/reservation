@@ -1,10 +1,13 @@
 import axios from 'axios'
-import * as types from './type'
-import store from './store'
+import Vue from 'vue'
+import { LoadingPlugin } from 'vux'
+Vue.use(LoadingPlugin)
 
 axios.interceptors.request.use(
   config => {
-    store.commit(types.GLOBAL_LOADING_STATUS, true)
+    Vue.$vux.loading.show({
+      text: '正在提交请求'
+    })
     return config;
   },
   err => {
@@ -13,7 +16,7 @@ axios.interceptors.request.use(
 )
 axios.interceptors.response.use(
   response => {
-    store.commit(types.GLOBAL_LOADING_STATUS, false)
+    Vue.$vux.loading.hide()
     return response;
   },
   err => {
@@ -33,6 +36,13 @@ export default {
   },
   getSigin: function (params, cb) {
     axios.get('/api/sigin').then(function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
+    })
+  },
+  getHomeInfo: function (cb) {
+    axios.get('/api/homepage').then(function (res) {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }

@@ -2,8 +2,11 @@
   <div id="signin" ref="signin">
     <div class="container">
        <group title="新用户注册">
-      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入用户名">
+      <x-input title="手机号" v-model="username" type="text" required placeholder="请输入你的手机号">
         <i slot="label" class="iconfont icon-lianxirenwode"></i>
+      </x-input>
+       <x-input title="验证码" class="weui-vcode">
+        <x-button slot="right" type="primary" mini>发送验证码</x-button>
       </x-input>
       <x-input title="密码" v-model="password" type="password" required placeholder="请输入密码">
         <i slot="label" class="iconfont icon-suo"></i>
@@ -16,7 +19,7 @@
         {{error}}
       </div>
     <br>
-    <x-button @click.native="register" class="sub-btn" plain :show-loading="showload"> 注册 </x-button>
+    <x-button @click.native="register" class="sub-btn" plain> 注册 </x-button>
     </div>
     <div class="link">
       <router-link to="/login">返回登录</router-link>
@@ -30,11 +33,15 @@ export default {
   name: 'sigin',
   data () {
     return {
-      showload: false,
       username: '',
       confirm: '',
       error: '',
       password: ''
+    }
+  },
+  computed: {
+    showload () {
+      return this.$store.getters.getLoadingStatus;
     }
   },
   mounted () {
@@ -59,10 +66,21 @@ export default {
       }
       this.$store.dispatch('getSigin', {'username': this.username, 'confirm': this.confirm}).then(res => {
         if (_this.$store.getters.getSigninSuccess) {
-          alert('you are in')
-          _this.$router.push('/login')
+          this.$vux.alert.show({
+            title: '成功提示',
+            content: '恭喜你，你已经注册成功！<br/>将跳转至登录页面',
+            onHide () {
+              _this.$router.push('/login')
+            }
+          })     
         } else {
-          alert(_this.$store.getters.getSigninMessage)
+          this.$vux.alert.show({
+            title: '错误提示',
+            content: '抱歉，注册失败！<br/>请尝试重新提交请求<br>错误信息：' + _this.$store.getters.getSigninMessage,
+            onShow () {
+
+            }
+          })
         }
       })
     }
