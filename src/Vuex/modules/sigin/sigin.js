@@ -7,6 +7,13 @@ const state = {
 }
 
 const actions = {
+  sendMessage(params) {
+    return new Promise(function (resolve, reject) {
+      api.sendMessage(params, function (res) {
+        resolve(res)
+      })
+    })
+  },
   getSigin({ commit }, params) {
     return new Promise(function (resolve, reject) {
       api.getSigin(params, function (res) {

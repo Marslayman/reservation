@@ -9,20 +9,16 @@
       </div>
       <div class="input-info">
       <group title="登 录 信 息">
-      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入你的注册手机号">
+      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入手机号">
         <i slot="label" class="iconfont icon-lianxirenwode"></i>
       </x-input>
       <x-input title="密码" v-model="password" type="password" required placeholder="请输入密码">
         <i slot="label" class="iconfont icon-suo"></i>
       </x-input>
     </group>
-    <div class="errinfo">
-        {{error}}
       </div>
-      </div>
-      
       <div class="foot">
-         <x-button @click.native="subinfo" class="sub-btn" plain :show-loading="showload"> 登 录 </x-button>
+         <x-button @click.native="subinfo" class="sub-btn" plain > 登 录 </x-button>
       </div>
       <div class="link">
         <router-link to="/sigin">注册新用户</router-link>
@@ -39,13 +35,7 @@ export default {
   data () {
     return {
       username: '',
-      password: '',
-      error: ''
-    }
-  },
-  computed: {
-    showload () {
-      return this.$store.getters.getLoadingStatus;
+      password: ''
     }
   },
   mounted () {
@@ -61,7 +51,10 @@ export default {
         return
       }
       if (!this.username.match(unreg) || !this.password.match(pwdreg)) {
-        this.error = '手机号或密码格式有误，请重新输入'
+        this.$vux.alert.show({
+          title: '错误提示',
+          content: '手机号格式或密码有误<br>请确认后重启提交'
+        })
         return
       }
       this.$store.dispatch('getLogin', {'username': _this.username, 'password': _this.password}).then(res => {
@@ -69,11 +62,12 @@ export default {
           if (window.localStorage) {
             window.localStorage.setItem('userinfo', res)
           }
-          alert('you are login')
           _this.$router.push('/index')
         } else {
-          alert(_this.$store.getters.getErrorMessage);
-          this.error = '用户名或密码有误，请重新输入'
+          this.$vux.alert.show({
+            title: '错误提示',
+            content: '登录失败<br/>请尝试重新提交请求<br>错误信息：' + _this.$store.getters.getErrorMessage
+          })
         }
       })
     }

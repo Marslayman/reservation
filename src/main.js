@@ -10,6 +10,7 @@ import './common/font/iconfont.css'
 import login from './common/js/mock/login/index'
 import sigin from './common/js/mock/sigin/index'
 import homepage from './common/js/mock/homepage/index'
+import Validation from './common/js/mock/validation/index'
 import { AlertPlugin } from 'vux'
 Vue.use(AlertPlugin)
 const FastClick = require('fastclick')

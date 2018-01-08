@@ -26,7 +26,7 @@
       </popup>
     </div>
     <group class="info-container" slot="default">
-      <cell v-for="(item, index) in headerinfo.data" :key="index" @click.native="DrInfo" v-show="onTypeFilter(item.type, type)">
+      <cell v-for="(item, index) in headerinfo.data" :key="index" @click.native="doctorInfo(item)" v-show="onTypeFilter(item.type, type)">
         <div class="content-r" slot="icon">
           <img :src="item.avatar" alt="">
         </div>
@@ -40,27 +40,22 @@
       </cell>
     </group>
      <tabbar slot="bottom">
-      <tabbar-item>
-        <span slot="label">Wechat</span>
-      </tabbar-item>
       <tabbar-item show-dot>
-        <span slot="label">Message</span>
-      </tabbar-item>
-      <tabbar-item selected link="/component/demo">
-        <span slot="label">Explore</span>
+        <span slot="label">主页</span>
       </tabbar-item>
       <tabbar-item badge="2">
         <!-- <img slot="icon" src="../assets/demo/icon_nav_cell.png"> -->
-        <span slot="label">News</span>
+        <span slot="label">个人</span>
       </tabbar-item>
     </tabbar>
     </view-box>
+    <doctor :infoShow="infoShow" :doctor="doctor"></doctor>
   </div>
 </template>
 
 <script>
 import { Swiper, SwiperItem, Divider, Cell, Group, Rater, Tabbar, TabbarItem, Checker, CheckerItem, Popup, TransferDom, ViewBox, Sticky } from 'vux'
-
+import doctor from '../Doctor/Doctor'
 export default {
   directives: {
     TransferDom
@@ -73,6 +68,7 @@ export default {
     Group,
     Rater,
     Tabbar,
+    doctor,
     TabbarItem,
     Checker, 
     CheckerItem, 
@@ -90,6 +86,11 @@ export default {
       if (!this.disabled) {
         this.showPopup = false
       }
+    },
+    doctorInfo (item) {
+      this.infoShow = true
+      this.doctor = item
+      alert('step into doctor page')
     },
     onTypeFilter (originType, setType) {
       if (setType === '全部') {
@@ -121,6 +122,8 @@ export default {
     return {
       headerinfo: {},
       showPopup: false,
+      infoShow: false,
+      doctor: {},
       type: '全部',
       types: [ '全部', '心理咨询', '塔罗牌', '催眠', '情感' ]
     }

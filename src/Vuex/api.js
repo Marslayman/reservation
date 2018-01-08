@@ -25,6 +25,13 @@ axios.interceptors.response.use(
 )
 
 export default {
+  sendMessage: function (params, cb) {
+    axios.get('/api/validation').then(function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
+    })
+  },
   getLogin: function (params, cb) {
     axios.get('/api/login').then(function (res) {
       if (res.status >= 200 && res.status < 300) {
