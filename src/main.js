@@ -11,8 +11,9 @@ import login from './common/js/mock/login/index'
 import sigin from './common/js/mock/sigin/index'
 import homepage from './common/js/mock/homepage/index'
 import Validation from './common/js/mock/validation/index'
-import { AlertPlugin } from 'vux'
+import { AlertPlugin, ToastPlugin } from 'vux'
 Vue.use(AlertPlugin)
+Vue.use(ToastPlugin)
 const FastClick = require('fastclick')
 FastClick.attach(document.body)
 

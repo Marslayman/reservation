@@ -58,9 +58,10 @@ export default {
         return
       }
       this.$store.dispatch('getLogin', {'username': _this.username, 'password': _this.password}).then(res => {
+        var user = res.data
         if (_this.$store.getters.getLoginSuccess) {
-          if (window.localStorage) {
-            window.localStorage.setItem('userinfo', res)
+          if (window.localStorage && window.localStorage.getItem('userinfo') === undefined) {
+            window.localStorage.setItem('userinfo', JSON.stringify(user)) // JSON.stringify 将对象转换为字符串
           }
           _this.$router.push('/index')
         } else {
