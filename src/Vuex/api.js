@@ -30,6 +30,15 @@ export default {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
+    }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  submitInfo: function (params, cb) {
+    axios.get('/api/reserve').then(function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
     })
   },
   getLogin: function (params, cb) {
@@ -46,6 +55,8 @@ export default {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
+    }).catch((error) => {
+      return Promise.reject(error)
     })
   },
   getHomeInfo: function (cb) {
@@ -53,6 +64,8 @@ export default {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
+    }).catch((error) => {
+      return Promise.reject(error)
     })
   }
 }

@@ -7,7 +7,7 @@ const state = {
 }
 
 const actions = {
-  getLogin: function ({commit}, params) {
+  getLogin: function ({ commit }, params) {
     return new Promise((resolve, reject) => {
       api.getLogin(params, function (res) {
         commit(types.LOGIN_SUCCESS, res)

@@ -1,6 +1,8 @@
 import Logon from '@/components/Logon/Logon'
 import Sigin from '@/components/Signin/Signin'
 import Index from '@/components/Index/index'
+import Message from '@/components/Message/Message'
+import Personal from '@/components/Personal/Personal'
 
 export default [{
   path: '/',
@@ -14,4 +16,10 @@ export default [{
 }, {
   path: '/index',
   component: Index
+}, {
+  path: '/message',
+  component: Message
+}, {
+  path: '/personal',
+  component: Personal
 }]

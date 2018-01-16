@@ -4,6 +4,7 @@ import login from './modules/login/login'
 import common from './modules/common/common'
 import sigin from './modules/sigin/sigin'
 import homepage from './modules/homepage/homepage'
+import reserve from './modules/reserve/reserve'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     login,
     common,
     sigin,
-    homepage
+    homepage,
+    reserve
   }
 })

@@ -1,2 +1,3 @@
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const SIGIN_SUCCESS = 'SIGIN_SUCCESS'
+export const SUBMIT_INFO = 'SUBMIT_INFO'

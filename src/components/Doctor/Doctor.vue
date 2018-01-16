@@ -76,6 +76,7 @@
 
 <script>
 import { XHeader, Rater, Divider, InlineCalendar, ViewBox, Sticky, XButton, TransferDom, Popup, Icon } from 'vux'
+import message from '../Message/Message'
 export default {
   directives: {
     TransferDom
@@ -125,7 +126,26 @@ export default {
       this.infoShow = true
     },
     submitInfo () {
-      alert('your info has been submit')
+      var _this = this
+      var reserveinfo = {
+        'name': this.doctor.name,
+        'type': this.doctor.type,
+        'extrainfo': this.extrainfo,
+        'date': this.reserveDate,
+        'avatar': this.avater,
+        'rate': this.doctor.rater
+      }
+      this.$store.dispatch('submitInfo', reserveinfo).then(res => {
+        var result = res
+        if (result.status === 'success') {
+          _this.$router.push('/message')
+        } else {
+          this.$vux.alert.show({
+            title: '错误提示',
+            content: '信息提交失败,请尝试重新提交请求<br>错误信息：' + result.error + result.status
+          })
+        }
+      })
     },
     reserveConfirm () {
       if (this.reserveDate === '') {
@@ -146,7 +166,8 @@ export default {
     XButton,
     TransferDom,
     Popup,
-    Icon
+    Icon,
+    message
   }
 }
 </script>

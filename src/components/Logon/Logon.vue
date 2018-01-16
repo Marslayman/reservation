@@ -29,7 +29,6 @@
 
 <script>
 import { XInput, Group, XButton } from 'vux'
-import {mapgetters} from 'vuex'
 export default {
   name: 'landpage',
   data () {
