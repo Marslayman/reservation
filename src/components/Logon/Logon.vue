@@ -9,20 +9,16 @@
       </div>
       <div class="input-info">
       <group title="登 录 信 息">
-      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入用户名">
+      <x-input title="用户名" v-model="username" type="text" required placeholder="请输入手机号">
         <i slot="label" class="iconfont icon-lianxirenwode"></i>
       </x-input>
       <x-input title="密码" v-model="password" type="password" required placeholder="请输入密码">
         <i slot="label" class="iconfont icon-suo"></i>
       </x-input>
     </group>
-    <div class="errinfo">
-        {{error}}
       </div>
-      </div>
-      
       <div class="foot">
-         <x-button @click.native="subinfo" class="sub-btn" plain :show-loading="showload"> 登 录 </x-button>
+         <x-button @click.native="subinfo" class="sub-btn" plain > 登 录 </x-button>
       </div>
       <div class="link">
         <router-link to="/sigin">注册新用户</router-link>
@@ -33,19 +29,12 @@
 
 <script>
 import { XInput, Group, XButton } from 'vux'
-import {mapgetters} from 'vuex'
 export default {
   name: 'landpage',
   data () {
     return {
       username: '',
-      password: '',
-      error: ''
-    }
-  },
-  computed: {
-    showload () {
-      return this.$store.getters.getLoadingStatus;
+      password: ''
     }
   },
   mounted () {
@@ -55,25 +44,30 @@ export default {
   methods: {
     subinfo () {
       var _this = this
-      var unreg = /[\u4e00-\u9fa5_a-zA-Z0-9_]{4,6}/ // 正则表达式对用户名做规则匹配
+      var unreg = /^1[3|4|5|7|8][0-9]{9}$/ // 正则表达式对用户名做规则匹配
       var pwdreg = /^[a-zA-Z0-9]{6,8}$/ // 正则表达式对密码做规则匹配
       if (this.username === '' || this.password === '') {
         return
       }
       if (!this.username.match(unreg) || !this.password.match(pwdreg)) {
-        this.error = '用户名或密码有误，请重新输入'
+        this.$vux.alert.show({
+          title: '错误提示',
+          content: '手机号格式或密码有误<br>请确认后重启提交'
+        })
         return
       }
       this.$store.dispatch('getLogin', {'username': _this.username, 'password': _this.password}).then(res => {
+        var user = res.data
         if (_this.$store.getters.getLoginSuccess) {
-          if (window.localStorage) {
-            window.localStorage.setItem('userinfo', res)
+          if (window.localStorage && window.localStorage.getItem('userinfo') === undefined) {
+            window.localStorage.setItem('userinfo', JSON.stringify(user)) // JSON.stringify 将对象转换为字符串
           }
-          alert('you are login')
           _this.$router.push('/index')
         } else {
-          alert(_this.$store.getters.getErrorMessage);
-          this.error = '用户名或密码有误，请重新输入'
+          this.$vux.alert.show({
+            title: '错误提示',
+            content: '登录失败<br/>请尝试重新提交请求<br>错误信息：' + _this.$store.getters.getErrorMessage
+          })
         }
       })
     }

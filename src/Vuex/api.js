@@ -1,10 +1,13 @@
 import axios from 'axios'
-import * as types from './type'
-import store from './store'
+import Vue from 'vue'
+import { LoadingPlugin } from 'vux'
+Vue.use(LoadingPlugin)
 
 axios.interceptors.request.use(
   config => {
-    store.commit(types.GLOBAL_LOADING_STATUS, true)
+    Vue.$vux.loading.show({
+      text: '正在提交请求'
+    })
     return config;
   },
   err => {
@@ -13,7 +16,7 @@ axios.interceptors.request.use(
 )
 axios.interceptors.response.use(
   response => {
-    store.commit(types.GLOBAL_LOADING_STATUS, false)
+    Vue.$vux.loading.hide()
     return response;
   },
   err => {
@@ -22,6 +25,31 @@ axios.interceptors.response.use(
 )
 
 export default {
+  sendMessage: function (params, cb) {
+    axios.get('/api/validation').then(function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
+    }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  getReservation: function (cb) {
+    axios.get('/api/reservation').then(function (res) {
+      if (res.status >= 200 & res.status < 300) {
+        cb(res.data)
+      }
+    }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  submitInfo: function (params, cb) {
+    axios.get('/api/reserve').then(function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
+    })
+  },
   getLogin: function (params, cb) {
     axios.get('/api/login').then(function (res) {
       if (res.status >= 200 && res.status < 300) {
@@ -36,6 +64,17 @@ export default {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
+    }).catch((error) => {
+      return Promise.reject(error)
+    })
+  },
+  getHomeInfo: function (cb) {
+    axios.get('/api/homepage').then(function (res) {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
+    }).catch((error) => {
+      return Promise.reject(error)
     })
   }
 }
