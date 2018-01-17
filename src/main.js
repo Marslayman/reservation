@@ -10,8 +10,9 @@ import './common/font/iconfont.css'
 import login from './common/js/mock/login/index'
 import sigin from './common/js/mock/sigin/index'
 import homepage from './common/js/mock/homepage/index'
-import Validation from './common/js/mock/validation/index'
-import reserve from './common/js/mock/reservation/index'
+import validation from './common/js/mock/validation/index'
+import reserve from './common/js/mock/reserve/index'
+import reservation from './common/js/mock/reservation/index'
 import { AlertPlugin, ToastPlugin } from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
