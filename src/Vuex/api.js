@@ -26,12 +26,19 @@ axios.interceptors.response.use(
 
 export default {
   sendMessage: function (params, cb) {
-    axios.get('/api/validation').then(function (res) {
+    axios.get('/api/validation', params).then(function (res) {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
     }).catch((error) => {
       return Promise.reject(error)
+    })
+  },
+  getDocDetail: function (params, cb) {
+    axios.get('/api/doctorinfo', params).then(res => {
+      if (res.status >= 200 && res.status < 300) {
+        cb(res.data)
+      }
     })
   },
   getReservation: function (cb) {
@@ -44,14 +51,14 @@ export default {
     })
   },
   submitInfo: function (params, cb) {
-    axios.get('/api/reserve').then(function (res) {
+    axios.get('/api/reserve', params).then(function (res) {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
     })
   },
   getLogin: function (params, cb) {
-    axios.get('/api/login').then(function (res) {
+    axios.get('/api/login', params).then(function (res) {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }
@@ -60,7 +67,7 @@ export default {
     })
   },
   getSigin: function (params, cb) {
-    axios.get('/api/sigin').then(function (res) {
+    axios.get('/api/sigin', params).then(function (res) {
       if (res.status >= 200 && res.status < 300) {
         cb(res.data)
       }

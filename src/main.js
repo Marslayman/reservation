@@ -13,6 +13,8 @@ import homepage from './common/js/mock/homepage/index'
 import validation from './common/js/mock/validation/index'
 import reserve from './common/js/mock/reserve/index'
 import reservation from './common/js/mock/reservation/index'
+import doctor from './common/js/mock/doctor/index'
+
 import { AlertPlugin, ToastPlugin } from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)

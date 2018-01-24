@@ -2,7 +2,7 @@
   <div id="personal" ref="personal" style="height:100%;">
     <div class="top">
       <card>
-        <div slot="header" class="card-head" :class="{blue:userinfo.sex === '男', red:userinfo.sex === '女'}">
+        <div slot="header" class="card-head">
           <div class="person-avatar">
             <img :src="userinfo.avater" alt="avatar" width="78" height="78">
           </div>
@@ -21,7 +21,7 @@
             预约信息
           </div>
           <div slot="content" class="info-content">
-            <div class="tag" :class="{man:userinfo.sex === '男', woman:userinfo.sex === '女'}">
+            <div class="tag">
               <i class="iconfont icon-schedule"></i>
             </div>
             <div class="info">
@@ -121,12 +121,7 @@
       position: relative;
       width: 100%;
       height: 84px;
-      &.blue {
-        background-color: lightblue;
-      }
-      &.red {
-        background-color: magenta;
-      }
+      background-color: lightblue;
       .person-avatar {
         position: absolute;
         bottom: -39px;
@@ -160,6 +155,7 @@
       .tag {
         flex: 72px 0 1;
         text-align: center;
+        color: #88D9DA;
         i {
           font-size: 36px;
           display: block;

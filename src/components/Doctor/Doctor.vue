@@ -1,5 +1,5 @@
 <template>
-  <div id="doc-info" v-show="infoShow">
+  <div id="doc-info">
     <x-header>导师预约</x-header>
     <view-box >
     <div class="container">
@@ -25,14 +25,14 @@
       <divider>+</divider>
       <div class="reserve">
         <h5>预约日期</h5>
-        <p>提示：有<span style="background-color:green;color:white;font-weight:700;">已预约</span>标签的日期为该导师已经被预约的日期,请酌情选择有效日期进行预约</p>
+        <p>提示：有<span style="background-color:#88D9DA;color:white;font-weight:700;">已预约</span>标签的日期为该导师已经被预约的日期,请酌情选择有效日期进行预约</p>
       <inline-calendar :disable-past="disablePast" @on-change="dateChange" v-model="reserveDate" :render-function="renderDate"></inline-calendar>
         <p class="reserve-date">您要预约的日期是：{{reserveDate}}<span style="color:red;" v-show="ErrMsg">请选择预约日期</span></p>
       </div>
       <x-button @click.native="reserveConfirm" type="primary"> 预 约 </x-button>
     </div>
     <div v-transfer-dom>
-      <popup v-model="order" position="top">
+      <popup v-model="order" position="top" style="z-index: 99999;">
         <div class="orderinfo">
           <div class="topinfo">
              <icon type="success" is-msg></icon>
@@ -76,24 +76,18 @@
 
 <script>
 import { XHeader, Rater, Divider, InlineCalendar, ViewBox, Sticky, XButton, TransferDom, Popup, Icon } from 'vux'
-import message from '../Message/Message'
+// import message from '../Message/Message'
+// import doctor from '../Doctor/Doctor'
 export default {
   directives: {
     TransferDom
-  },
-  props: {
-    infoShow: {
-      types: Boolean,
-      default: false
-    },
-    doctor: Object
   },
   data () {
     var _this = this
     return {
       reserveDate: '',
+      doctor: {},
       extrainfo: '',
-      // userinfo: {},
       ErrMsg: false,
       order: false,
       userinfo: (function () {
@@ -105,14 +99,37 @@ export default {
       mark: ['2018-01-10', '2018-01-11'],
       renderDate (line, index, data) {
         if (_this.mark.indexOf(data.formatedDate) >= 0) {
-          return '<div style="font-size:12px;text-align:center;"><span style="background-color:green;color:white;font-weight:700;">已预约</span></div>'
+          return '<div style="font-size:12px;text-align:center;"><span style="background-color:#88D9DA;color:white;font-weight:700;">已预约</span></div>'
         } else {
           return '<div style="height:19px;"></div>'
         }
       }
     }
   },
+  created () {
+    this.getDocDetail()
+  },
+  watch: {
+    '$route': 'getDocDetail'
+  },
   methods: {
+    getDocDetail () {
+      var id = this.$route.params.id
+      this.$store.dispatch('getDocDetail', id).then(res => {
+        if (res.status === 'success') {
+          this.doctor = res.data
+          var aa = JSON.stringify(this.doctor)
+        } else {
+          this.$vux.alert.show({
+            title: '错误提示',
+            content: '抱歉，获取信息失败！<br/>请尝试重新登录<br>错误信息：' + res.errormessage,
+            onHide() {
+              window.location.reload()
+            }
+          })
+        }
+      })
+    },
     dateChange (val) {
       if (this.mark.indexOf(val) >= 0) {
         this.reserveDate = ''
@@ -122,8 +139,7 @@ export default {
       }
     },
     goBack () {
-      this.order = false
-      this.infoShow = true
+
     },
     submitInfo () {
       var _this = this
@@ -152,7 +168,6 @@ export default {
         this.ErrMsg = true
         return
       }
-      this.infoShow = false
       this.order = true
     }
   },
@@ -166,8 +181,7 @@ export default {
     XButton,
     TransferDom,
     Popup,
-    Icon,
-    message
+    Icon
   }
 }
 </script>
@@ -204,7 +218,7 @@ export default {
           }
         }
         p:nth-child(2) {
-          color: rgb(65, 194, 113);
+          color: #88D9DA;
           font-style: italic;
         }
         p:nth-child(1) {
@@ -227,7 +241,7 @@ export default {
         &.reserve-date {
           font-weight: 700;
           margin-top: 12px;
-          color: green;
+          color: #88D9DA;
             }
       }
     }
@@ -255,7 +269,7 @@ export default {
     margin-bottom: 12px;
     padding: 0 12px;
     h4 {
-      color: #1AAD19;
+      color: #88D9DA;
       font-weight: 700;
       margin-bottom: 8px;
     }
@@ -271,7 +285,7 @@ export default {
     textarea {
       margin-top: 4px;
       width: 100%;
-      border: 1px solid #1AAD19;
+      border: 1px solid #88D9DA;
       border-radius: 8px;
       margin-bottom: 8px;
       padding: 8px;
@@ -298,7 +312,7 @@ export default {
         padding-top: 12px;
         padding-left: 18px;
         p:nth-child(2) {
-          color: #1AAD19;
+          color: #88D9DA;
           font-style: italic;
         }
       }

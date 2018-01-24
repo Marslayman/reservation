@@ -26,7 +26,8 @@
         </group>
       </sticky>
       <group slot="default" gutter="0px">
-        <cell v-for="(item, index) in headerinfo.data" :key="index" @click.native="doctorInfo(item)" v-show="onTypeFilter(item.type, type)">
+        <cell v-for="(item, index) in headerinfo.data" :key="index" @click.native="showDocDetail(item.id)" v-show="onTypeFilter(item.type, type)">
+         
           <div class="content-r" slot="icon">
             <img :src="item.avatar" alt="">
           </div>
@@ -44,6 +45,7 @@
               <rater v-model="item.rater" star="♡" active-color="red" :margin="4" :font-size="18" disabled></rater>
             </p>
           </div>
+
         </cell>
       </group>
       <tabbar slot="bottom">
@@ -57,13 +59,13 @@
         </tabbar-item>
       </tabbar>
     </view-box>
-    <doctor :infoShow="infoShow" :doctor="doctor"></doctor>
+    <!-- <doctor :infoShow="infoShow" :doctor="doctor"></doctor> -->
   </div>
 </template>
 
 <script>
   import { Swiper, SwiperItem, Divider, Cell, Group, Rater, Tabbar, TabbarItem, Checker, CheckerItem, Popup, TransferDom, ViewBox, Sticky } from 'vux'
-  import doctor from '../Doctor/Doctor'
+  // import doctor from '../Doctor/Doctor'
   export default {
     directives: {
       TransferDom
@@ -76,7 +78,7 @@
       Group,
       Rater,
       Tabbar,
-      doctor,
+      // doctor,
       TabbarItem,
       Checker,
       CheckerItem,
@@ -95,9 +97,9 @@
           this.showPopup = false
         }
       },
-      doctorInfo(item) {
-        this.infoShow = true
-        this.doctor = item
+      showDocDetail(id) {
+      //  this.$router.push({ path: `/doctor/${userId}` })
+        this.$router.push('/doctor/' + id)
       },
       onTypeFilter(originType, setType) {
         if (setType === '全部') {
@@ -129,8 +131,8 @@
       return {
         headerinfo: {},
         showPopup: false,
-        infoShow: false,
-        doctor: {},
+        // infoShow: false,
+        // doctor: {},
         height: 0,
         type: '全部',
         types: ['全部', '心理咨询', '塔罗牌', '催眠', '情感']
@@ -171,7 +173,7 @@
     border-radius: 15px;
   }
   .demo4-item-selected {
-    background-color: #FF3B3B;
+    background-color: #88D9DA;
     color: #fff;
   }
   .demo4-item-disabled {

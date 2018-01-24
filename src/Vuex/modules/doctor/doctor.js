@@ -1,9 +1,9 @@
 import api from '../../api'
 
 const actions = {
-  submitInfo(params) {
+  getDocDetail(params) {
     return new Promise(function (resolve, reject) {
-      api.submitInfo(params, function (res) {
+      api.getDocDetail(params, function (res) {
         resolve(res)
       })
     })

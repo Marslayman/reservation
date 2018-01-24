@@ -39,11 +39,6 @@ export default {
       count: 60
     }
   },
-  computed: {
-    showload () {
-      return this.$store.getters.getLoadingStatus;
-    }
-  },
   mounted () {
     this.$refs.signin.style.width = window.screen.availWidth + 'px';
     this.$refs.signin.style.height = window.screen.availHeight + 'px';
@@ -106,7 +101,7 @@ export default {
         return
       }
       this.$store.dispatch('getSigin', {'tel': this.tel, 'confirm': this.confirm}).then(res => {
-        if (_this.$store.getters.getSigninSuccess) {
+        if (res.status === 'yes') {
           this.$vux.alert.show({
             title: '成功提示',
             content: '恭喜你，你已经注册成功！<br/>将跳转至登录页面',
@@ -134,6 +129,7 @@ export default {
 <style lang="scss" scoped>
 #signin {
   position: relative;
+  background-color: #88D9DA;
   .iconfont {
     padding: 0 6px;
     }
@@ -146,8 +142,11 @@ export default {
     right: 0;
     left: 0;
     bottom: 0;
-    border-top: 2px solid rgba(7, 17, 27, .5);
-    border-bottom: 2px solid rgba(7, 17, 27, .5);
+    padding: 0px 24px;
+    .sub-btn {
+      color:white;
+      border-color: white;
+    }
   }
   .link {
     position: fixed;
@@ -156,7 +155,7 @@ export default {
     right: 0; // 使fixed对象中的元素水平居中
     left: 0;  // 使fixed对象中的元素水平居中
     a {
-      color: black;
+      color: white;
     }
   }
 }

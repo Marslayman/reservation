@@ -58,7 +58,7 @@ export default {
       }
       this.$store.dispatch('getLogin', {'username': _this.username, 'password': _this.password}).then(res => {
         var user = res.data
-        if (_this.$store.getters.getLoginSuccess) {
+        if (res.status === 'in') {
           if (window.localStorage && window.localStorage.getItem('userinfo') === undefined) {
             window.localStorage.setItem('userinfo', JSON.stringify(user)) // JSON.stringify 将对象转换为字符串
           }
@@ -82,14 +82,13 @@ export default {
 
 <style lang="scss" scoped>
   #landpage {
-    background-color: #212121;
+    background-color: #88D9DA;
     .iconfont {
       padding: 0 6px;
     }
     .container {
       position: relative;
       padding-top: 48px;
-      background: url('./index_bg.png') no-repeat center;
       .header {
         width: 200px;
         height: 200px;
@@ -120,6 +119,9 @@ export default {
         margin: 0 auto;
         right: 0; // 使fixed对象中的元素水平居中
         left: 0;  // 使fixed对象中的元素水平居中
+        a {
+          color: white;
+        }
       }
     }
     p {

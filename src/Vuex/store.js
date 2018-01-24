@@ -6,6 +6,7 @@ import sigin from './modules/sigin/sigin'
 import homepage from './modules/homepage/homepage'
 import reserve from './modules/reserve/reserve'
 import reservation from './modules/reservation/reservation'
+import doctor from './modules/doctor/doctor'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     sigin,
     homepage,
     reserve,
-    reservation
+    reservation,
+    doctor
   }
 })
